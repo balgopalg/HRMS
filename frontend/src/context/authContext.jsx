@@ -1,28 +1,71 @@
 // src/context/authContext.jsx
 
-import React,{createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios"; // Make sure to import axios
 
+// The context should have a more descriptive name, like AuthContext
+const AuthContext = createContext();
 
-const userContext = createContext();
+// Component name should be capitalized
+const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
-const authContext = ({children}) => {
-    const [user,setUser] = useState(null)
+    useEffect(() => {
+        const verifyUser = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (token) {
+                    const response = await axios.get('http://localhost:5000/api/auth/verify', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
 
-    // The login function should accept a user object
-    const login = (user) => {
-        // Here, you pass the new user data to the state
-        setUser(user)
-    }
+                    if (response.data.success) {
+                        setUser(response.data.user);
+                    } else {
+                        // If the backend response indicates failure, clear the token
+                        localStorage.removeItem("token");
+                        setUser(null);
+                    }
+                }
+            } catch (error) {
+                // If the request fails (e.g., 401 Unauthorized), clear the token
+                console.error("Error verifying user:", error);
+                localStorage.removeItem("token");
+                setUser(null);
+            } finally {
+                // Set loading to false regardless of the outcome
+                setIsLoading(false);
+            }
+        };
+        verifyUser();
+    }, []);
+
+    const login = (userData) => {
+        setUser(userData);
+    };
+
     const logout = () => {
-        setUser(null)
-        localStorage.removeItem("token")
-    }
-    return (
-        <userContext.Provider value = {{user,login, logout }}>
-            {children}
-        </userContext.Provider>
-    )
-}
+        setUser(null);
+        localStorage.removeItem("token");
+    };
 
-export const useAuth = () => useContext(userContext)
-export default authContext
+    return (
+        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+// Hook name should also be capitalized
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};
+
+export default AuthProvider;

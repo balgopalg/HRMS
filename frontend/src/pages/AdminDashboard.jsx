@@ -1,22 +1,12 @@
-// src/components/AdminDashboard.jsx
+import React from "react";
+import { useAuth } from "../context/authContext";
 
-import React from 'react'
-import { useAuth } from '../context/authContext'
-
-function AdminDashboard() {
-  const { user } = useAuth();
-
-  // Conditional check to prevent crashing if `user` is null
-  if (!user) {
-    return <div>Please log in to view the Admin Dashboard.</div>;
-  }
+const AdminDashboard = () => {
+  const {user} = useAuth();
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      <p>Welcome, {user.name}!</p>
-    </div>
-  );
+    <div>AdminDashboard {user && user.name}</div>
+  )
 }
 
 export default AdminDashboard;
