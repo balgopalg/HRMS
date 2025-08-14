@@ -1,15 +1,16 @@
-import React from 'react'
-import {Navigate} from 'react-router-dom'
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
-const PrivateRoutes = ({ children }) => {
-  const { user, isLoading } = useAuth();
+const PrivateRoutes = () => {
+    const { user, isLoading } = useAuth();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-  return user ? children : <Navigate to="/login" />;
-}
+    // If a user is authenticated, render the nested routes
+    return user ? <Outlet /> : <Navigate to="/login" />;
+};
 
-export default PrivateRoutes
+export default PrivateRoutes;
