@@ -101,4 +101,28 @@ const updateDepartment = async (req, res) => {
     }
 }
 
-export { addDepartment, getDepartments, getDepartmentById, updateDepartment }; // <-- Export the new function
+// @desc    Delete a department
+// @route   DELETE /api/department/:id
+// @access  Private (e.g., Admin)
+const deleteDepartment = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletedDepartment = await Department.findByIdAndDelete(id);
+
+        if (!deletedDepartment) {
+            return res.status(404).json({ success: false, message: 'Department not found' });
+        }
+
+        return res.status(200).json({ success: true, message: 'Department deleted successfully!' });
+
+    } catch (error) {
+        console.error("Error in deleteDepartment:", error);
+        if (error.name === 'CastError') {
+            return res.status(400).json({ success: false, message: 'Invalid department ID format' });
+        }
+        return res.status(500).json({ success: false, message: 'Server error' });
+    }
+}
+
+export { addDepartment, getDepartments, getDepartmentById, updateDepartment, deleteDepartment }; // Export the new function
