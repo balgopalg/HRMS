@@ -3,12 +3,15 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
 import EmployeeDashboard from './pages/EmployeeDashboard';
-import DepartmentList from './components/department/DepartmentList'; // <-- Import the new component
 import RoleBasedRoutes from './utils/RoleBasedRoutes';
-import PrivateRoutes from './utils/PrivateRoutes'; // <-- Make sure to import this
-import AdminSummary from './components/dashboard/AdminSummary';
-import AddDepartment from './components/department/AddDepartment';
-import EditDepartment from './components/department/EditDepartment'; // Import the EditDepartment component
+import PrivateRoutes from './utils/PrivateRoutes';
+import AdminSummary from './components/dashboard/AdminSummary'; // Import the AdminSummary component
+import DepartmentList from './components/department/DepartmentList'; //Import the DepartmentList component
+import AddDepartment from './components/department/AddDepartment'; //Import the AddDepartment component
+import EditDepartment from './components/department/EditDepartment'; //Import the EditDepartment component
+import EmployeeList from './components/employee/EmployeeList'; // Import the EmployeeList component
+import AddEmployee from './components/employee/addEmployee.jsx'; // Import the AddEmployee component
+import EditEmployee from './components/employee/EditEmployee'; // Import the EditEmployee component
 
 function App() {
     return (
@@ -32,10 +35,18 @@ function App() {
                         }
                     >
                         {/* Nested Routes for the Admin Dashboard */}
-                        <Route index element={<AdminSummary />} end/> {/* Default content for /admin-dashboard */}
+                        <Route index element={<AdminSummary />} end/>
+                        
+                        {/* Department Routes */}
                         <Route path="departments" element={<DepartmentList />} />
                         <Route path="add-department" element={<AddDepartment />} />
                         <Route path="department/:id" element={<EditDepartment />} />
+
+                        {/* Employee Routes */}
+                        <Route path="employees" element={<EmployeeList />} />
+                        <Route path="add-employee" element={<AddEmployee />} />
+                        <Route path="employee/:id" element={<EditEmployee />} />
+                        
                         {/* Other nested admin routes will go here */}
                     </Route>
                     

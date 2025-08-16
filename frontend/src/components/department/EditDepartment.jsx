@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const EditDepartment = () => {
     const { id } = useParams();
@@ -81,6 +82,15 @@ const EditDepartment = () => {
 
     return (
         <div className="bg-gray-100 min-h-screen p-8">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate(-1)}
+                className="flex items-center gap-2 text-teal-600 hover:text-teal-800 font-medium mb-6"
+            >
+                <FaArrowLeft className="text-sm" />
+                Back
+            </button>
+
             <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md border-t-4 border-teal-500">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Edit Department</h2>
                 <form onSubmit={handleSubmit}>

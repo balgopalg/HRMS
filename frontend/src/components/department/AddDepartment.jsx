@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Corrected: Added the import for axios
+import axios from 'axios';
+import { FaArrowLeft } from 'react-icons/fa'; // back arrow icon
 
 const AddDepartment = () => {
-    // State to hold the department name and description in a single object
     const [department, setDepartment] = useState({
         dept_name: '',
         description: ''
     });
 
-    // Handle form input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setDepartment({ ...department, [name]: value });
@@ -17,11 +16,9 @@ const AddDepartment = () => {
 
     const navigate = useNavigate();
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Corrected: Added validation using the 'department' state object
         if (department.dept_name.trim() === '') {
             alert('Department name cannot be empty!');
             return;
@@ -30,14 +27,13 @@ const AddDepartment = () => {
         try {
             const response = await axios.post('http://localhost:5000/api/department/add', department, {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem('token')}` // <-- Ensure you have the token in localStorage
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
                 }
             });
             if (response.data.success) {
                 alert('Department added successfully!');
-                // Reset form
                 setDepartment({ dept_name: '', description: '' });
-                navigate('/admin-dashboard/departments'); // Navigate to the departments list page
+                navigate('/admin-dashboard/departments');
             }
         } catch (error) {
             if (error.response && !error.response.data.success) {
@@ -50,6 +46,15 @@ const AddDepartment = () => {
 
     return (
         <div className="bg-gray-100 min-h-screen p-8">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate(-1)}
+                className="flex items-center gap-2 text-teal-600 hover:text-teal-800 font-medium mb-6"
+            >
+                <FaArrowLeft className="text-sm" />
+                Back
+            </button>
+
             <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md border-t-4 border-teal-500">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Add New Department</h2>
                 <form onSubmit={handleSubmit}>

@@ -24,7 +24,7 @@ const Navbar = () => {
         {/* Brand Name on the Left (for visual balance with the sidebar) */}
         <div className="text-gray-800 text-2xl font-bold">
           <NavLink to="/" className="text-teal-600">
-            <img src="/public/logo.jpg" alt="" className="h-10 rounded" />
+            <img src="/src/assets/logo.jpg" alt="" className="h-10 rounded" />
           </NavLink>
         </div>
 
