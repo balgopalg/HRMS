@@ -12,6 +12,10 @@ import EditDepartment from './components/department/EditDepartment'; //Import th
 import EmployeeList from './components/employee/EmployeeList'; // Import the EmployeeList component
 import AddEmployee from './components/employee/addEmployee.jsx'; // Import the AddEmployee component
 import EditEmployee from './components/employee/EditEmployee'; // Import the EditEmployee component
+import LeaveList from './components/leave/LeaveList.jsx';
+import AddLeave from './components/leave/AddLeave.jsx';
+import EditLeave from './components/leave/EditLeave.jsx';
+
 
 function App() {
     return (
@@ -47,7 +51,10 @@ function App() {
                         <Route path="add-employee" element={<AddEmployee />} />
                         <Route path="employee/:id" element={<EditEmployee />} />
                         
-                        {/* Other nested admin routes will go here */}
+                        {/* Leave Routes */}
+                        <Route path="leaves" element={<LeaveList />} />
+                        <Route path="add-leave" element={<AddLeave />} />
+                        <Route path="leave/:id" element={<EditLeave />} />
                     </Route>
                     
                     {/* Employee Route */}
