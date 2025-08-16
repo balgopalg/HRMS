@@ -15,7 +15,10 @@ import EditEmployee from './components/employee/EditEmployee'; // Import the Edi
 import LeaveList from './components/leave/LeaveList.jsx';
 import AddLeave from './components/leave/AddLeave.jsx';
 import EditLeave from './components/leave/EditLeave.jsx';
-
+import SalaryList from './components/salary/SalaryList';
+import AddSalary from './components/salary/AddSalary';
+import EditSalary from './components/salary/EditSalary';
+import Settings from './components/settings/settings.jsx';
 
 function App() {
     return (
@@ -55,6 +58,13 @@ function App() {
                         <Route path="leaves" element={<LeaveList />} />
                         <Route path="add-leave" element={<AddLeave />} />
                         <Route path="leave/:id" element={<EditLeave />} />
+
+                        {/* Salary Routes */}
+                        <Route path="salaries" element={<SalaryList />} />
+                        <Route path="add-salary" element={<AddSalary />} />
+                        <Route path="salary/:id" element={<EditSalary />} />
+
+                        <Route path="settings" element={<Settings />} />
                     </Route>
                     
                     {/* Employee Route */}
